@@ -11,7 +11,7 @@ const useLoginStore = defineStore('login', {
     loginAction(username: string, password: string) {
       console.log(username, password)
       axiosInstance.post('/login', {
-        username,
+        name: username,
         password
       }).then(res => {
         console.log(res)
