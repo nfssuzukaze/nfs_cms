@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance } from 'axios'
 import { BASE_URL, TIME_OUT } from '../config'
 import type { AxiosRequestConfig } from 'axios'
-import type { MyAxiosConfig } from './types'
+import type { MyAxiosConfig } from '../types'
 
 const baseConfig: AxiosRequestConfig = {
   baseURL: BASE_URL,
@@ -13,10 +13,10 @@ const createAxiosInstance = (config: MyAxiosConfig): AxiosInstance => {
   delete config.interceptors
   const realConfig: AxiosRequestConfig = config
 
-  console.log(config, baseConfig, {
-    ...baseConfig,
-    ...realConfig
-  })
+  // console.log(config, baseConfig, {
+  //   ...baseConfig,
+  //   ...realConfig
+  // })
 
   const service = axios.create({
     ...baseConfig,
