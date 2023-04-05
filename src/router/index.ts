@@ -33,14 +33,19 @@ router.beforeEach((to, from) => {
   //     (route: RouteRecordRaw) => route.path === to.path
   //   )
   //   if (route && !router.hasRoute(route.name)) {
+  //     // const modules = import.meta.glob(``)
   //     console.log('route.name', route.name, route)
   //     router.addRoute('main', route)
   //   }
   // }
 
+  // 如果 userRoutesInfo 存在, 则说明用户登录过
+  // 这里调用 resolveRoleRoutes 方法保证动态路由的存在
   if (userRoutesInfo) resolveRoleRoutes(userRoutesInfo)
 
+  // 没有指定具体页面, 则默认跳转到 main 组件
   if (to.path === '/') return '/main'
+  // 如果用户没有登录则跳转到登录页面
   if (to.path.startsWith('/main') && !token) return '/login'
 })
 
