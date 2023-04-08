@@ -12,7 +12,7 @@ import {
   getUserRoleByAccountId
 } from '@/service/login'
 import router from '@/router'
-import { menuToRoutes, resolveRoleRoutes } from '@/utils/resolveRoleRoutes'
+import { menuToRoutes } from '@/utils/resolveRoleRoutes'
 
 const useLoginStore = defineStore('login', {
   state() {
@@ -44,8 +44,6 @@ const useLoginStore = defineStore('login', {
       // 配置动态路由
       if (this.userMenuInfo) {
         const routes = menuToRoutes(this.userMenuInfo)
-        console.log('store routes', routes)
-        resolveRoleRoutes(routes)
         localCache.setCache(USER_ROUTE_INFO, routes)
       }
 
