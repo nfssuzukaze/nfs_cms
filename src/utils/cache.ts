@@ -10,7 +10,6 @@ class StorageCache {
   }
 
   setCache(key: string, value: any) {
-    console.log(value)
     this.storage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value))
   }
 

@@ -1,3 +1,4 @@
+import { USER_ROUTE_INFO } from '@/global/constants'
 import useLoginStore from '@/stores/login/login'
 import { defaultSelectedRoute } from '@/utils/resolveRoleRoutes'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -30,7 +31,6 @@ router.beforeEach((to, from) => {
   const { token, userRoutesInfo } = loginStore
 
   if (userRoutesInfo) {
-    console.log('router before has userRoutesInfo')
     // 如果目标URL和routes中的URL匹配, 且 router 中还没有对应的 route
     // 就添加动态路由
     const route = userRoutesInfo.find(
@@ -47,7 +47,6 @@ router.beforeEach((to, from) => {
       router.addRoute('main', route)
       return route.path
     }
-    console.log('before each over')
   }
 
   // 没有指定具体页面, 则默认跳转到 main 组件

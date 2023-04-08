@@ -44,7 +44,7 @@ const useLoginStore = defineStore('login', {
       // 配置动态路由
       if (this.userMenuInfo) {
         const routes = menuToRoutes(this.userMenuInfo)
-        localCache.setCache(USER_ROUTE_INFO, routes)
+        localCache.setCache(USER_ROUTE_INFO, (this.userRoutesInfo = routes))
       }
 
       router.push('/main')
