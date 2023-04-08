@@ -1,4 +1,3 @@
-import { USER_ROUTE_INFO } from '@/global/constants'
 import useLoginStore from '@/stores/login/login'
 import { defaultSelectedRoute } from '@/utils/resolveRoleRoutes'
 import { createRouter, createWebHistory } from 'vue-router'

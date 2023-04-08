@@ -11,6 +11,14 @@ export const menuToRoutes = (menu: any[]) => {
     menuItem.children.forEach((childMenu: any) => {
       const route = routes.find((route) => route.path === childMenu.url)
       if (route) {
+        // 为保证面包屑选项的交互效果
+        if (!authorityRoutes.find((route) => route.path === menuItem.url)) {
+          authorityRoutes.push({
+            name: menuItem.url.split('/')[2],
+            path: menuItem.url,
+            redirect: route.path
+          })
+        }
         authorityRoutes.push(route)
         if (!defaultSelectedRoute) defaultSelectedRoute = route
       }
@@ -21,59 +29,38 @@ export const menuToRoutes = (menu: any[]) => {
 }
 
 /**
- * 
+ *
  * @param path 当前页面的路径
  * @param menu 所有菜单
  * @returns 被路径匹配的子菜单 {id: number, url: string, name: string}
  */
+
 export const pathToMenu = (path: string, menu: any[]): any => {
   for (const menuItem of menu) {
     for (const subItem of menuItem.children) {
       if (subItem.url === path) {
-        console.log('=======================', subItem)
         return subItem
       }
     }
   }
 }
 
-/**
- * route: {
- *   name: string
- *   path: string
- *   component: function
- * }
- */
+type BreadCrumbItem = {
+  id: number
+  path: string
+  name: string
+}
 
-// export const resolveRoleRoutes = (routes: RouteRecordRaw[]) => {
-//   console.log('process resolveRoleRoutes method')
-//   // 保证只解析一次
-//   if (isResolved) return
-//   isResolved = true
-
-//   const modules = import.meta.glob(`@/views/main/**/*.vue`)
-//   // console.log(modules)
-
-//   for (const path in modules) {
-//     const route = routes.find(route => path.includes(route.path))
-//     // console.log(path, route)
-//     if (route && !route.component) route.component = modules[path]
-//     // if (route) route.component = modules[path] as any
-//     // console.log('==========', path, route)
-//   }
-
-//   routes.forEach((route: RouteRecordRaw) => {
-//     // console.log('routes loop in resolveRoleRoutes')
-//     // if (!route.component) {
-//     //   console.log('route.component', route.component)
-//     //   const componentPath = `@/views${route.path}/${route.name as string}.vue`
-//     //   route.component = () => import(componentPath)
-//     //   console.log('import path: ', componentPath)
-//     //   console.log('route', route, { ...route })
-//     // }
-//     // console.log('xxx', route)
-//     router.addRoute('main', route)
-//   })
-
-//   console.log('router.getRoutes', router.getRoutes())
-// }
+export const getBreadCrumbList = (path: string, menu: any[]) => {
+  const list: BreadCrumbItem[] = []
+  for (const menuItem of menu) {
+    for (const subItem of menuItem.children) {
+      if (subItem.url === path) {
+        list.push({ id: menuItem.id, name: menuItem.name, path: menuItem.url })
+        list.push({ id: subItem.id, name: subItem.name, path: subItem.url })
+        return list
+      }
+    }
+  }
+  return list
+}

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useLoginStore from '@/stores/login/login'
-import { pathToMenu } from '../../utils/resolveRoleRoutes';
+import { pathToMenu } from '../../utils/resolveRoleRoutes'
 
 const loginStore = useLoginStore()
 const { userMenuInfo: menu } = loginStore
@@ -24,9 +24,10 @@ defineProps<{
 }>()
 
 const route = useRoute()
-const currentMenu = pathToMenu(route.path, menu)
-console.log('currentMenu =================>', currentMenu)
-const defaultActive = ref(currentMenu ? currentMenu.id + '' : '')
+const currentMenu = computed(() => pathToMenu(route.path, menu))
+// console.log('currentMenu =================>', currentMenu)
+const defaultActive = computed(() => currentMenu.value.id + '')
+// const defaultActive = ref(currentMenu.value ? currentMenu.value.id + '' : '')
 </script>
 
 <template>
@@ -54,7 +55,7 @@ const defaultActive = ref(currentMenu ? currentMenu.id + '' : '')
             <el-icon>
               <component :is="getIconName(menuItem.icon)"></component>
             </el-icon>
-            <span>{{ menuItem.name }}--{{ menuItem.id }}</span>
+            <span>{{ menuItem.name }}</span>
           </template>
 
           <template
@@ -64,7 +65,7 @@ const defaultActive = ref(currentMenu ? currentMenu.id + '' : '')
             <el-menu-item
               @click="handleClickChildrenItem(subMenuItem.url)"
               :index="subMenuItem.id + ''"
-              >{{ subMenuItem.name }} -- {{ subMenuItem.id }}</el-menu-item
+              >{{ subMenuItem.name }}</el-menu-item
             >
           </template>
         </component>

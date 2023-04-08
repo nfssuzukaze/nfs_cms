@@ -36,9 +36,9 @@ const isOpenChange = (value: boolean) => {
     @apply h-full w-full;
   }
   .left {
-    border: 1px solid black;
     transition: width 0.3s ease;
     // overflow: hidden;
+    @apply border-r-gray-200 border-r-1;
   }
   .left::-webkit-scrollbar {
     display: none;
@@ -46,11 +46,12 @@ const isOpenChange = (value: boolean) => {
 
   .right {
     .header {
-      border: 1px solid lightblue;
+      // border: 1px solid lightblue;
+      @apply border-b-gray-200 border-b-1;
     }
 
     .main-view {
-      border: 1px solid lightgreen;
+      // border: 1px solid lightgreen;
     }
   }
 }
