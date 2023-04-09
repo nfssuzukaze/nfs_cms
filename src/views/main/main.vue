@@ -51,6 +51,7 @@ const isOpenChange = (value: boolean) => {
     }
 
     .main-view {
+      @apply bg-light-400;
       // border: 1px solid lightgreen;
     }
   }

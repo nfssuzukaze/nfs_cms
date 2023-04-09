@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useLoginStore from '@/stores/login/login'
 import { pathToMenu } from '../../utils/resolveRoleRoutes'
 
 const loginStore = useLoginStore()
 const { userMenuInfo: menu } = loginStore
-
-console.log(menu)
 
 const getIconName = (icon: string) => {
   const iconStr = icon.split('-')[2]
@@ -24,10 +22,10 @@ defineProps<{
 }>()
 
 const route = useRoute()
-const currentMenu = computed(() => pathToMenu(route.path, menu))
-// console.log('currentMenu =================>', currentMenu)
-const defaultActive = computed(() => currentMenu.value.id + '')
-// const defaultActive = ref(currentMenu.value ? currentMenu.value.id + '' : '')
+const defaultActive = computed(() => {
+  const currentMenu = pathToMenu(route.path, menu)
+  return currentMenu?.id + ''
+})
 </script>
 
 <template>
@@ -78,10 +76,9 @@ const defaultActive = computed(() => currentMenu.value.id + '')
 .main-aside {
   .title {
     @apply text-black text-lg font-bold;
-    @apply flex items-center justify-center;
+    @apply flex items-center justify-center mt-2;
 
     img {
-      @apply my-1;
       width: 70%;
     }
   }
